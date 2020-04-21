@@ -28,8 +28,15 @@ namespace AppDevW3L2
             int usrDay = Int32.Parse(split[1]);
             DateTime usrDate = new DateTime(usrYear, usrMonth, usrDay, 0, 0, 0);
             DateTime todayDate = DateTime.Today;
+            TimeSpan totalDays = (usrDate.Date - todayDate.Date);
 
-            Lbl_Purchase.Text = Int32.Parse((usrDate - todayDate).TotalDays.ToString()) <= -7665 ? "You can purchase alcohol." : "You cannot purchase alcohol";
+            int years = 21-((int)totalDays.Days / -365);
+            int days = 365-(totalDays.Days % 365 * -1);
+            
+            //int days = Int32.Parse(totalDays.ToString());
+            //days -= -7665;
+            
+            Lbl_Purchase.Text = totalDays.TotalDays <= -7665 ? "You can purchase alcohol." : $"You cannot purchase alcohol, you must wait " + (years == 1 ? days + " days." : years + " years and " + days + " days."); 
         }
     }
 }
